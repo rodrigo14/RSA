@@ -1,4 +1,6 @@
 #include <NTL/ZZ.h>
+#include <iostream>
+#include "RSA.cpp"
 
 using namespace std;
 using namespace NTL;
@@ -9,8 +11,19 @@ int main() {
 
 	cin >> a;
 	cin >> b;
-	c = (a+1)*(b+1);
+	c = pow(a, b);
 	cout << c << endl;
+	
+	/*
+	ZZ a, b, key;
 
+
+	cin >> key;	
+	cin >> a;
+	cin >> b;
+	RSA r(key);
+	r.mdc(a, b);
+
+	*/
 	return 0;
 }
