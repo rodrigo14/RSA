@@ -1,25 +1,24 @@
-#include <NTL/ZZ.h>
-
-using namespace NTL;
-using namespace std;
+#include "RSA.h"
 
 class RSA {
-public:
-	ZZ key;
+private:
+	ZZ key, mod;
 
+public:
 	RSA(ZZ key) {
 		this->key = key;
+		this->mod = mod;
 	}
 
 	~RSA() {}
 	
-	string encrypt(string text, ZZ key, ZZ mod) {
+	string encrypt(string text) {
 	}
 
-	string decrypt(string text, ZZ key, ZZ mod) {
+	string decrypt(string text) {
 	}
 
-	ZZ mdc(ZZ &a, ZZ &b)	{
+	ZZ mdc(ZZ &a, ZZ &b) {
 		ZZ r = a%b;
 
 		if (a < b) {
@@ -33,8 +32,6 @@ public:
 			b = r;
 			r = a%b;
 		}
-
-		cout << b << endl;
 
 		return b;
 	}

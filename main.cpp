@@ -11,19 +11,17 @@ int main() {
 
 	cin >> a;
 	cin >> b;
-	c = pow(a, b);
+	c = a * b;
 	cout << c << endl;
 	
-	/*
-	ZZ a, b, key;
-
-
-	cin >> key;	
+	ZZ key;
+	cin >> key;
 	cin >> a;
 	cin >> b;
 	RSA r(key);
-	r.mdc(a, b);
+	cout << r.mdc(a, b) << endl;
 
+	/*
 	*/
 	return 0;
 }
