@@ -4,7 +4,6 @@
 using namespace std;
 using namespace NTL;
 
-ZZ RSA(int nbits);
 ZZ find_large_prime(int nbits);
 ZZ mdc(ZZ &p, ZZ &q);
 ZZ privatekey_generator(ZZ p, ZZ q);
