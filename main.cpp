@@ -35,13 +35,14 @@ int main() {
 	int a,b,c,n,res;
 	*/
 	ZZ a,b,c,n,res;
-	a = 11;
-	b = 23;
-	n = 187;
+	a = 1132132;
+	b = 2332131231;
+	n = 18235327;
 
-	res = PowerMod(a, b, n);
+	// res = RSA(500).modular_exponentiation(a,b,n);
+	RSA r(500);
 
-	cout << res << endl;
+	//cout << res << endl;
 	
 	return 0;
 }
