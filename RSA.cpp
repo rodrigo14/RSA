@@ -10,15 +10,14 @@ public:
 	ZZ mod;
 
 	RSA(long nbits) {
-		ZZ p, q;
-		// p = RandomBits_ZZ(2*nbits);
-		// q = RandomBits_ZZ(2*nbits);
-		p = 17;
-		q = 11;
+		ZZ p, q, a, minimum;
+		a = 2;
+		long b = 500;
+		minimum = power(a, b);
+		p = RandomBits_ZZ(2*nbits) + minimum;
+		q = RandomBits_ZZ(2*nbits) + minimum;
 		this->mod = p * q;
 		this->phi = (p-1) * (q-1);
-
-
 		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->privatekey, this->phi);
 
@@ -64,16 +63,17 @@ private:
 	}
 
 	ZZ publickey_generator(ZZ phi) {
-		ZZ e;
-		e = 17;
+		ZZ e, a;
+		a = 2;
+		long b = 16;
+		e = power(a, b) + 1;
 
 		return e;
 	}
 
 	ZZ privatekey_generator(ZZ e, ZZ phi) {
 		ZZ d;
-		//d = InvMod(e, phi);
-		//Euclides 
+		InvModStatus(d, e, phi);
 		return d;
 	}
 
