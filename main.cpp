@@ -41,6 +41,7 @@ int main() {
 
 	// res = RSA(500).modular_exponentiation(a,b,n);
 	RSA r(500);
+	r.encrypt("ola mundo");
 
 	//cout << res << endl;
 	

@@ -5,26 +5,27 @@ private:
 	ZZ privatekey;
 	ZZ phi;
 
-
 public:
 	ZZ publickey;
 	ZZ mod;
 
 	RSA(long nbits) {
 		ZZ p, q;
-		p = generate_long_number(nbits);
-		q = generate_long_number(nbits);
+		p = generate_large_prime(nbits);
+		q = generate_large_prime(nbits);
+
 		this->mod = p * q;
 		this->phi = (p-1) * (q-1);
 		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->privatekey, this->phi);
-
-		// cout << "p: " << p << endl << endl;
-		// cout << "q: " << q << endl << endl;
-		// cout << "mod: " << mod << endl << endl;
-		// cout << "phi: " << phi << endl << endl;
-		// cout << "publickey: " << publickey << endl << endl;
-		// cout << "privatekey: " << privatekey << endl << endl;
+/*
+		cout << "p: " << p << endl << endl;
+		cout << "q: " << q << endl << endl;
+		cout << "mod: " << mod << endl << endl;
+		cout << "phi: " << phi << endl << endl;
+		cout << "publickey: " << publickey << endl << endl;
+		cout << "privatekey: " << privatekey << endl << endl;
+*/
 	}
 
 	~RSA() {
@@ -37,11 +38,16 @@ public:
 	string encrypt(string text) {
 		string out;
 		for (int i = 0; i < text.size(); i++) {
+			cout << i << ":";
 			ZZ C, M;
 			M = text[i];
-			C = modular_exponentiation(M, publickey, mod);
+
+			C = modular_exponentiation(M, this->publickey, this->mod) % ('z'-'0') + '0';
+			cout << C << endl;
 			//out += C;
 		}
+
+		cout << endl;
 
 		return out;
 	}
@@ -59,7 +65,16 @@ public:
 	}
 
 private:
-	ZZ find_large_prime(long nbits) {
+	ZZ generate_large_prime(long nbits) {
+		ZZ prime, w;
+		prime = RandomPrime_ZZ(nbits);
+		w = rand();
+
+		if (MillerWitness(prime, w) > 0)
+			return generate_large_prime(nbits + rand());
+		
+		return prime;
+
 	}
 
 	ZZ generate_long_number(long nbits) {
@@ -94,15 +109,11 @@ private:
 		ZZ r = a%b;
 
 		if (a < b) {
-			a ^= b;
-			b ^= a;
-			a ^= b;
+			a ^= b;	b ^= a;	a ^= b;
 		}
 
 		while (r > 0) {
-			a = b;
-			b = r;
-			r = a%b;
+			a = b; b = r; r = a%b;
 		}
 
 		return b;
@@ -110,16 +121,19 @@ private:
 
 public:
 	// return res = a^b mod(n)
-	ZZ modular_exponentiation(ZZ &a, ZZ &b, ZZ &n) {
+	ZZ modular_exponentiation(const ZZ &a, const ZZ &b, const ZZ &n) {
 		ZZ res;
+		ZZ A, B;
 		res = 1;
+		A = a;
+		B = b;
 
-		while (b > 0) {
-			if (compare(b&1, 0) > 0) {
-				res = (res*a)%n;
+		while (B > 0) {
+			if (compare(B&1, 0) > 0) {
+				res = (res*A)%n;
 			}
-			b >>= 1;
-			a = (a*a)%n;
+			B >>= 1;
+			A = (A*A)%n;
 		}
 
 		return res;
