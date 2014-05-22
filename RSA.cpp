@@ -5,28 +5,34 @@ private:
 	ZZ privatekey;
 	ZZ phi;
 
+
 public:
 	ZZ publickey;
 	ZZ mod;
 
 	RSA(long nbits) {
-		ZZ p, q, a, minimum;
-		a = 2;
-		long b = 500;
-		minimum = power(a, b);
-		p = RandomBits_ZZ(2*nbits) + minimum;
-		q = RandomBits_ZZ(2*nbits) + minimum;
+		ZZ p, q;
+		p = generate_long_number(nbits);
+		q = generate_long_number(nbits);
 		this->mod = p * q;
 		this->phi = (p-1) * (q-1);
 		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->privatekey, this->phi);
 
 		cout << "p: " << p << endl << endl;
+		cout << "NumBytes(p): " << NumBytes(p) << endl << endl;
 		cout << "q: " << q << endl << endl;
-		cout << "mod: " << mod << endl << endl;
-		cout << "phi: " << phi << endl << endl;
-		cout << "publickey: " << publickey << endl << endl;
-		cout << "privatekey: " << privatekey << endl << endl;
+		// cout << "mod: " << mod << endl << endl;
+		// cout << "phi: " << phi << endl << endl;
+		// cout << "publickey: " << publickey << endl << endl;
+		// cout << "privatekey: " << privatekey << endl << endl;
+	}
+
+	~RSA() {
+		publickey.kill();
+		privatekey.kill();
+		mod.kill();
+		phi.kill();
 	}
 
 	string encrypt(string text) {
@@ -55,11 +61,16 @@ public:
 
 private:
 	ZZ find_large_prime(long nbits) {
-
 	}
 
 	ZZ generate_long_number(long nbits) {
+		ZZ minimum;
+		long a = 2;
+		long b = 500;
+		power(minimum, a, b);
+		ZZ random = RandomLen_ZZ(2*nbits);
 
+		return random;
 	}
 
 	ZZ publickey_generator(ZZ phi) {
@@ -74,6 +85,7 @@ private:
 	ZZ privatekey_generator(ZZ e, ZZ phi) {
 		ZZ d;
 		InvModStatus(d, e, phi);
+		
 		return d;
 	}
 
