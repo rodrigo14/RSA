@@ -19,9 +19,8 @@ public:
 		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->privatekey, this->phi);
 
-		cout << "p: " << p << endl << endl;
-		cout << "NumBytes(p): " << NumBytes(p) << endl << endl;
-		cout << "q: " << q << endl << endl;
+		// cout << "p: " << p << endl << endl;
+		// cout << "q: " << q << endl << endl;
 		// cout << "mod: " << mod << endl << endl;
 		// cout << "phi: " << phi << endl << endl;
 		// cout << "publickey: " << publickey << endl << endl;
