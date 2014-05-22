@@ -72,6 +72,7 @@ private:
 		return random;
 	}
 
+	// return e = 65537
 	ZZ publickey_generator(ZZ phi) {
 		ZZ e, a;
 		a = 2;
@@ -81,6 +82,7 @@ private:
 		return e;
 	}
 
+	// return d = e^{-1} mod(phi)
 	ZZ privatekey_generator(ZZ e, ZZ phi) {
 		ZZ d;
 		InvModStatus(d, e, phi);
@@ -107,7 +109,7 @@ private:
 	}
 
 public:
-	// returns: res = a^b mod(n)
+	// return res = a^b mod(n)
 	ZZ modular_exponentiation(ZZ &a, ZZ &b, ZZ &n) {
 		ZZ res;
 		res = 1;
