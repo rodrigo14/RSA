@@ -1,4 +1,4 @@
 prog
 tests/msr
 tests/test
-out.txt
+temp

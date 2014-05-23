@@ -140,9 +140,9 @@ private:
 
 
 	long ZZtoi(const ZZ &z) {
-		ofstream fout("out.txt");
+		ofstream fout("temp");
 		fout << z << endl;
-		ifstream fin("out.txt");
+		ifstream fin("temp");
 		char buff[80];
 		fin.getline(buff, 80);
 		return atoi(buff);
