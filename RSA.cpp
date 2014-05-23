@@ -35,7 +35,7 @@ public:
 		phi.kill();
 	}
 
-	string encrypt(string text) {
+	string encrypt(const string text) {
 		string out;
 		for (int i = 0; i < text.size(); i++) {
 			cout << i << ":";
@@ -52,7 +52,7 @@ public:
 		return out;
 	}
 
-	string decrypt(string text) {
+	string decrypt(const string text) {
 		string out;
 		for (int i = 0; i < text.size(); i++) {
 			ZZ C, M;
@@ -71,7 +71,7 @@ private:
 		w = rand();
 
 		if (MillerWitness(prime, w) > 0)
-			return generate_large_prime(nbits + rand());
+			return generate_large_prime(nbits);
 		
 		return prime;
 
@@ -88,7 +88,7 @@ private:
 	}
 
 	// return e = 65537
-	ZZ publickey_generator(ZZ phi) {
+	ZZ publickey_generator(const ZZ &phi) {
 		ZZ e, a;
 		a = 2;
 		long b = 16;
@@ -98,7 +98,7 @@ private:
 	}
 
 	// return d = e^{-1} mod(phi)
-	ZZ privatekey_generator(ZZ e, ZZ phi) {
+	ZZ privatekey_generator(const ZZ &e, const ZZ &phi) {
 		ZZ d;
 		InvModStatus(d, e, phi);
 		
