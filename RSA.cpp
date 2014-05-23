@@ -1,4 +1,5 @@
 #include "RSA.h"
+#include <fstream>
 
 class RSA {
 private:
@@ -26,6 +27,7 @@ public:
 		cout << "publickey: " << publickey << endl << endl;
 		cout << "privatekey: " << privatekey << endl << endl;
 */
+		ofstream fout("out.txt", ios::trunc);
 	}
 
 	~RSA() {
@@ -38,16 +40,11 @@ public:
 	string encrypt(const string text) {
 		string out;
 		for (int i = 0; i < text.size(); i++) {
-			cout << i << ":";
 			ZZ C, M;
 			M = text[i];
-
 			C = modular_exponentiation(M, this->publickey, this->mod) % ('z'-'0') + '0';
-			cout << C << endl;
-			//out += C;
+			out += ZZtoi(C);
 		}
-
-		cout << endl;
 
 		return out;
 	}
@@ -57,9 +54,11 @@ public:
 		for (int i = 0; i < text.size(); i++) {
 			ZZ C, M;
 			C = text[i];
-			M = modular_exponentiation(C, privatekey, mod);
-			//out += M;
+			M = modular_exponentiation(C, this->privatekey, this->mod) % ('z'-'0') + '0';
+			out += ZZtoi(M);
 		}
+
+		cout << out << endl;
 
 		return out;
 	}
@@ -119,7 +118,6 @@ private:
 		return b;
 	}
 
-public:
 	// return res = a^b mod(n)
 	ZZ modular_exponentiation(const ZZ &a, const ZZ &b, const ZZ &n) {
 		ZZ res;
@@ -129,14 +127,25 @@ public:
 		B = b;
 
 		while (B > 0) {
-			if (compare(B&1, 0) > 0) {
+			if (IsOne(B&1)) {
 				res = (res*A)%n;
 			}
 			B >>= 1;
 			A = (A*A)%n;
 		}
 
+
 		return res;
+	}
+
+
+	long ZZtoi(const ZZ &z) {
+		ofstream fout("out.txt");
+		fout << z << endl;
+		ifstream fin("out.txt");
+		char buff[80];
+		fin.getline(buff, 80);
+		return atoi(buff);
 	}
 
 };
