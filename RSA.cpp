@@ -1,5 +1,6 @@
 #include "RSA.h"
 #include <fstream>
+#include <vector>
 
 class RSA {
 private:
@@ -19,7 +20,9 @@ public:
 		this->phi = (p-1) * (q-1);
 		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->privatekey, this->phi);
+
 /*
+		ofstream fout("test", ios::app);
 		cout << "p: " << p << endl << endl;
 		cout << "q: " << q << endl << endl;
 		cout << "mod: " << mod << endl << endl;
@@ -27,7 +30,7 @@ public:
 		cout << "publickey: " << publickey << endl << endl;
 		cout << "privatekey: " << privatekey << endl << endl;
 */
-		ofstream fout("out.txt", ios::trunc);
+		ofstream fout("temp", ios::trunc);
 	}
 
 	~RSA() {
@@ -37,28 +40,26 @@ public:
 		phi.kill();
 	}
 
-	string encrypt(const string text) {
-		string out;
+	vector<ZZ> encrypt(const string text) {
+		vector<ZZ> out;
 		for (int i = 0; i < text.size(); i++) {
 			ZZ C, M;
 			M = text[i];
-			C = modular_exponentiation(M, this->publickey, this->mod) % ('z'-'0') + '0';
-			out += ZZtoi(C);
+			C = modular_exponentiation(M, this->publickey, this->mod);// % ('z'-'0') + '0';
+			out.push_back(C);
 		}
 
 		return out;
 	}
 
-	string decrypt(const string text) {
+	string decrypt(const vector<ZZ> v) {
 		string out;
-		for (int i = 0; i < text.size(); i++) {
+		for (int i=0; i<v.size(); i++) {
 			ZZ C, M;
-			C = text[i];
-			M = modular_exponentiation(C, this->privatekey, this->mod) % ('z'-'0') + '0';
+			C = v[i];
+			M = modular_exponentiation(C, this->privatekey, this->mod);// % ('z'-'0') + '0';
 			out += ZZtoi(M);
 		}
-
-		cout << out << endl;
 
 		return out;
 	}
@@ -133,7 +134,6 @@ private:
 			B >>= 1;
 			A = (A*A)%n;
 		}
-
 
 		return res;
 	}
