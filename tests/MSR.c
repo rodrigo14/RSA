@@ -1,5 +1,5 @@
-/*                           TRABALHO EMC
-  Implementar o algoritmo de Miller-Selfridge-Rabin para testar se um número de 
+
+  /*Implementar o algoritmo de Miller-Selfridge-Rabin para testar se um número de 
 entrada é possível primo ou composto. O algoritmo deverá ser feito em linguagem C 
 e deve permitir testar mais de uma vez se o mesmo número é possível primo, ou não.
 

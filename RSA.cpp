@@ -1,6 +1,6 @@
-#include "RSA.h"
 #include <fstream>
 #include <vector>
+#include "RSA.h"
 
 class RSA {
 private:
@@ -12,9 +12,11 @@ public:
 	ZZ publickey;
 	ZZ mod;
 
+	RSA() {}
+
 	RSA(long nbits) {
-		p = generate_large_prime(nbits);
-		q = generate_large_prime(nbits);
+		this->p = generate_large_prime(nbits);
+		this->q = generate_large_prime(nbits);
 
 		this->mod = p * q;
 		this->phi = (p-1) * (q-1);
@@ -45,7 +47,7 @@ public:
 
 	string decrypt(const vector<ZZ> v) {
 		string out;
-		for (int i=0; i<v.size(); i++) {
+		for (int i = 0; i < v.size(); i++) {
 			ZZ C, M;
 			C = v[i];
 			M = modular_exponentiation(C, this->privatekey, this->mod);
@@ -56,7 +58,6 @@ public:
 	}
 
 	void getAttributes() {
-		//ofstream fout("test", ios::app);
 		cout << "p: " << this->p << endl << endl;
 		cout << "q: " << this->q << endl << endl;
 		cout << "mod: " << this->mod << endl << endl;
@@ -115,6 +116,7 @@ private:
 		return b;
 	}
 
+public:
 	// return res = a^b mod(n)
 	ZZ modular_exponentiation(const ZZ &a, const ZZ &b, const ZZ &n) {
 		ZZ res;
