@@ -4,6 +4,7 @@
 
 class RSA {
 private:
+	ZZ p, q;
 	ZZ privatekey;
 	ZZ phi;
 
@@ -12,7 +13,6 @@ public:
 	ZZ mod;
 
 	RSA(long nbits) {
-		ZZ p, q;
 		p = generate_large_prime(nbits);
 		q = generate_large_prime(nbits);
 
@@ -21,15 +21,6 @@ public:
 		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->privatekey, this->phi);
 
-/*
-		ofstream fout("test", ios::app);
-		cout << "p: " << p << endl << endl;
-		cout << "q: " << q << endl << endl;
-		cout << "mod: " << mod << endl << endl;
-		cout << "phi: " << phi << endl << endl;
-		cout << "publickey: " << publickey << endl << endl;
-		cout << "privatekey: " << privatekey << endl << endl;
-*/
 		ofstream fout("temp", ios::trunc);
 	}
 
@@ -45,7 +36,7 @@ public:
 		for (int i = 0; i < text.size(); i++) {
 			ZZ C, M;
 			M = text[i];
-			C = modular_exponentiation(M, this->publickey, this->mod);// % ('z'-'0') + '0';
+			C = modular_exponentiation(M, this->publickey, this->mod);
 			out.push_back(C);
 		}
 
@@ -57,11 +48,21 @@ public:
 		for (int i=0; i<v.size(); i++) {
 			ZZ C, M;
 			C = v[i];
-			M = modular_exponentiation(C, this->privatekey, this->mod);// % ('z'-'0') + '0';
+			M = modular_exponentiation(C, this->privatekey, this->mod);
 			out += ZZtoi(M);
 		}
 
 		return out;
+	}
+
+	void getAttributes() {
+		//ofstream fout("test", ios::app);
+		cout << "p: " << this->p << endl << endl;
+		cout << "q: " << this->q << endl << endl;
+		cout << "mod: " << this->mod << endl << endl;
+		cout << "phi: " << this->phi << endl << endl;
+		cout << "publickey: " << this->publickey << endl << endl;
+		cout << "privatekey: " << this->privatekey << endl << endl;
 	}
 
 private:
@@ -74,7 +75,6 @@ private:
 			return generate_large_prime(nbits);
 		
 		return prime;
-
 	}
 
 	ZZ generate_long_number(long nbits) {
@@ -107,14 +107,10 @@ private:
 
 	ZZ mdc(ZZ &a, ZZ &b) {
 		ZZ r = a%b;
-
-		if (a < b) {
+		if (a < b)
 			a ^= b;	b ^= a;	a ^= b;
-		}
-
-		while (r > 0) {
+		while (r > 0)
 			a = b; b = r; r = a%b;
-		}
 
 		return b;
 	}

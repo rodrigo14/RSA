@@ -12,6 +12,7 @@ int main() {
 	RSA r(nbits);
 	vector<ZZ> v = r.encrypt("ola mundo");
 	r.decrypt(v);
+	r.getAttributes();
 	
 	return 0;
 }
