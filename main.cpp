@@ -11,7 +11,7 @@ int main() {
 	long nbits = 500;
 	RSA r(nbits);
 	vector<ZZ> v = r.encrypt("ola mundo");
-	r.decrypt(v);
+	cout <<	r.decrypt(v) << endl;
 	r.getAttributes();
 	
 	return 0;

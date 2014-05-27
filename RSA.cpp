@@ -19,7 +19,7 @@ public:
 		this->mod = p * q;
 		this->phi = (p-1) * (q-1);
 		this->publickey = publickey_generator(this->phi);
-		this->privatekey = privatekey_generator(this->privatekey, this->phi);
+		this->privatekey = privatekey_generator(this->publickey, this->phi);
 
 		ofstream fout("temp", ios::trunc);
 	}
