@@ -1,42 +1,46 @@
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
+#include "Arithmetic.cpp"
 
-using namespace std;
 
 class MillerRabin {
 public:
 	MillerRabin() {}
 	
-	bool isPrime(int n) {
-		int k = 0, temp = 0;
-		do {
-			temp = (n-1) % (int) pow(2, ++k);
-		} while (temp == 0);
-		int q = (n-1)/(int) pow(2,--k);
+	bool isPrime(ZZ n) {
+		ZZ k, q, a;
 
-		int a = 2;//rand()%(n-1) + 1;
-
-		if ((int) pow(a, q) % n == 1)
+		factoring_number(k, q, n);
+		a = witness(n);
+	
+		if (IsOne(powerMod(a, q, n))) {
 			return 1;
+		}
 
-		for (int i = 0; i < k-1; ++i) {
-			if ((int) pow(a, (int) pow(2, i)*q) % n == n-1)
+		ZZ j;
+		for (j = 0; j < k; j++) {
+			ZZ t; t = Power(2, j)*q;
+			if (powerMod(a, t, n) == n-1)
 				return 1;
 		}
 
 		return 0;
 	}
+
+private:
+	void factoring_number(ZZ &k, ZZ &q, const ZZ &n) {
+		k = 0;
+		while ((n-1) % Power(2, ++k) == 0);
+		q = (n-1)/Power(2, --k);
+	}
+
+	// return a, 1 < a < (n-1)
+	ZZ witness(const ZZ n) {
+		srand(time(NULL));
+		long t = rand();
+		ZZ random; random = t;
+		ZZ a; a = random%(n-1) + 1;
+		return a;
+	}
 };
-
-int main(int argc, char const *argv[])
-{
-	int res = MillerRabin().isPrime(101);
-
-	if (res)
-		cout << "provavel primo" << endl;
-	else
-		cout << "composto" << endl;
-
-	return 0;
-}

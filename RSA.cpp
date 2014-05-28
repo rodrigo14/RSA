@@ -1,6 +1,5 @@
-#include <fstream>
 #include <vector>
-#include "RSA.h"
+#include "MillerRabin.cpp"
 
 class RSA {
 private:
@@ -15,8 +14,8 @@ public:
 	RSA() {}
 
 	RSA(long nbits) {
-		this->p = generate_large_prime(nbits);
-		this->q = generate_large_prime(nbits);
+		this->p = large_prime_generator(nbits);
+		this->q = large_prime_generator(nbits);
 
 		this->mod = p * q;
 		this->phi = (p-1) * (q-1);
@@ -38,7 +37,7 @@ public:
 		for (int i = 0; i < text.size(); i++) {
 			ZZ C, M;
 			M = text[i];
-			C = modular_exponentiation(M, this->publickey, this->mod);
+			C = powerMod(M, this->publickey, this->mod);
 			out.push_back(C);
 		}
 
@@ -50,7 +49,7 @@ public:
 		for (int i = 0; i < v.size(); i++) {
 			ZZ C, M;
 			C = v[i];
-			M = modular_exponentiation(C, this->privatekey, this->mod);
+			M = powerMod(C, this->privatekey, this->mod);
 			out += ZZtoi(M);
 		}
 
@@ -67,33 +66,12 @@ public:
 	}
 
 private:
-	ZZ generate_large_prime(long nbits) {
-		ZZ prime, w;
-		prime = RandomPrime_ZZ(nbits);
-		w = rand();
-
-		if (MillerWitness(prime, w) > 0)
-			return generate_large_prime(nbits);
-		
-		return prime;
-	}
-
-	ZZ generate_long_number(long nbits) {
-		ZZ minimum;
-		long a = 2;
-		long b = 500;
-		power(minimum, a, b);
-		ZZ random = RandomLen_ZZ(2*nbits);
-
-		return random;
-	}
-
 	// return e = 65537
 	ZZ publickey_generator(const ZZ &phi) {
-		ZZ e, a;
+		ZZ e, a, b;
 		a = 2;
-		long b = 16;
-		e = power(a, b) + 1;
+		b = 16;
+		e = Power(a, b) + 1;
 
 		return e;
 	}
@@ -106,44 +84,26 @@ private:
 		return d;
 	}
 
-	ZZ mdc(ZZ &a, ZZ &b) {
-		ZZ r = a%b;
-		if (a < b)
-			a ^= b;	b ^= a;	a ^= b;
-		while (r > 0)
-			a = b; b = r; r = a%b;
 
-		return b;
+	ZZ long_number_generator(long nbits) {
+		ZZ minimum, a, b;
+		a = 2;
+		b = 500;
+		minimum = Power(a, b);
+		ZZ random = RandomLen_ZZ(2*nbits);
+
+		return random;
 	}
 
-public:
-	// return res = a^b mod(n)
-	ZZ modular_exponentiation(const ZZ &a, const ZZ &b, const ZZ &n) {
-		ZZ res;
-		ZZ A, B;
-		res = 1;
-		A = a;
-		B = b;
+	ZZ large_prime_generator(long nbits) {
+		ZZ prime;
+		prime = long_number_generator(nbits);
 
-		while (B > 0) {
-			if (IsOne(B&1)) {
-				res = (res*A)%n;
-			}
-			B >>= 1;
-			A = (A*A)%n;
+		while (!MillerRabin().isPrime(prime)) {
+			prime = long_number_generator(nbits);
 		}
-
-		return res;
-	}
-
-
-	long ZZtoi(const ZZ &z) {
-		ofstream fout("temp");
-		fout << z << endl;
-		ifstream fin("temp");
-		char buff[80];
-		fin.getline(buff, 80);
-		return atoi(buff);
+		
+		return prime;
 	}
 
 };

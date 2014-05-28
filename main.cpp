@@ -1,11 +1,5 @@
-#include <NTL/ZZ.h>
 #include <iostream>
-#include <cstdio>	
 #include "RSA.cpp"
-
-using namespace std;
-using namespace NTL;
-
 
 int main() {
 	long nbits = 500;
@@ -13,7 +7,7 @@ int main() {
 	vector<ZZ> v = r.encrypt("hello, world!");
 	string s = r.decrypt(v);
 	cout << s << endl;
-	// r.getAttributes();
+	r.getAttributes();
 	
 	return 0;
 }
