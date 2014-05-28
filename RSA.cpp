@@ -25,13 +25,12 @@ private:
 
 
 RSA::RSA(long nbits) {
+	cout << "Encrypting..." << endl;	
 	BlumBlumShub bbs(nbits);
 	do {
-		cout << "generating p..." << endl;
 		// do p = bbs.generate_number();
 		do p = large_prime_generator(nbits);
 		while (!MillerRabin().isPrime(p));
-		cout << "generating q..." << endl;
 		// do q = bbs.generate_number();
 		do q = large_prime_generator(nbits);
 		while (!MillerRabin().isPrime(q));
@@ -66,6 +65,7 @@ vector<ZZ> RSA::encrypt(const string text) {
 }
 
 string RSA::decrypt(const vector<ZZ> v) {
+	cout << "Decrypting..." << endl;
 	string out;
 	for (int i = 0; i < v.size(); i++) {
 		ZZ C, M;
@@ -74,6 +74,7 @@ string RSA::decrypt(const vector<ZZ> v) {
 		out += ZZtoi(M);
 	}
 
+	cout << "Done!" << endl;
 	return out;
 }
 

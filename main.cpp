@@ -1,13 +1,21 @@
 #include <iostream>
 #include "RSA.cpp"
+#include "read.cpp"
 
 int main() {
-	long nbits = 1024;
+	long nbits = 500;
 	RSA r(nbits);
-	vector<ZZ> v = r.encrypt("hello, world!");
+	string plaintext = readText("plaintext.txt");
+	vector<ZZ> v = r.encrypt(plaintext);
+
+	for (int i = 0; i < v.size(); ++i) {
+		writeTextOnFile(v[i], "cipher.txt");
+	}
+
 	string s = r.decrypt(v);
-	r.getAttributes();
-	cout << s << endl;
+	writeTextOnFile(s, "decipher.txt");
+
+	// r.getAttributes();
 	
 	return 0;
 }
