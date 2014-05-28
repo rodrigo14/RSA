@@ -55,14 +55,18 @@ ZZ Power(const long a, const ZZ &b) {
 	return res;
 }
 
-ZZ mdc(ZZ &a, ZZ &b) {
-	ZZ r = a%b;
-	if (a < b)
-		a ^= b;	b ^= a;	a ^= b;
-	while (r > 0)
-		a = b; b = r; r = a%b;
+ZZ mdc(const ZZ &a, const ZZ &b) {
+	ZZ A; A = a;
+	ZZ B; B = b;
 
-	return b;
+	ZZ r = A%B;
+	if (A < B)
+		A ^= B;	B ^= A;	A ^= B;
+	while (r > 0) {
+		A = B; B = r; r = A%B;
+	}
+
+	return B;
 }
 
 long ZZtoi(const ZZ &z) {
