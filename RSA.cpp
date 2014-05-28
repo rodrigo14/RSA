@@ -1,6 +1,6 @@
 #include <vector>
 #include "MillerRabin.cpp"
-#include "Generator.cpp"
+#include "BlumBlumShub.cpp"
 
 class RSA {
 private:
@@ -25,16 +25,24 @@ private:
 
 
 RSA::RSA(long nbits) {
+	BlumBlumShub bbs(nbits);
 	do {
-		this->p = large_prime_generator(nbits);
-		this->q = large_prime_generator(nbits);
-		this->mod = p * q;
-		this->phi = (p-1) * (q-1);
-		this->publickey = publickey_generator(this->phi);
+		cout << "generating p..." << endl;
+		// do p = bbs.generate_number();
+		do p = large_prime_generator(nbits);
+		while (!MillerRabin().isPrime(p));
+		cout << "generating q..." << endl;
+		// do q = bbs.generate_number();
+		do q = large_prime_generator(nbits);
+		while (!MillerRabin().isPrime(q));
+
+		mod = p * q;
+		phi = (p-1) * (q-1);
+
+		publickey = publickey_generator(phi);
 	} while (mdc(phi, publickey) != 1);
 
 	this->privatekey = privatekey_generator(this->publickey, this->phi);
-
 	ofstream fout("temp", ios::trunc);
 }
 
