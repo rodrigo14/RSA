@@ -11,15 +11,15 @@ public:
 	ZZ publickey;
 	ZZ mod;
 
-	RSA() {}
-
 	RSA(long nbits) {
-		this->p = large_prime_generator(nbits);
-		this->q = large_prime_generator(nbits);
+		do {
+			this->p = large_prime_generator(nbits);
+			this->q = large_prime_generator(nbits);
+			this->mod = p * q;
+			this->phi = (p-1) * (q-1);
+			this->publickey = publickey_generator(this->phi);
+		} while (mdc(phi, publickey) != 1);
 
-		this->mod = p * q;
-		this->phi = (p-1) * (q-1);
-		this->publickey = publickey_generator(this->phi);
 		this->privatekey = privatekey_generator(this->publickey, this->phi);
 
 		ofstream fout("temp", ios::trunc);
@@ -90,7 +90,7 @@ private:
 		a = 2;
 		b = 500;
 		minimum = Power(a, b);
-		ZZ random = RandomLen_ZZ(2*nbits);
+		ZZ random = RandomLen_ZZ(nbits);
 
 		return random;
 	}
