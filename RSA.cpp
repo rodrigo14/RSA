@@ -23,16 +23,15 @@ private:
 	ZZ privatekey_generator(const ZZ &e, const ZZ &phi);
 };
 
-
 RSA::RSA(long nbits) {
-	cout << "Encrypting..." << endl;	
+	
 	BlumBlumShub bbs(nbits);
 	do {
 		// do p = bbs.generate_number();
-		do p = large_prime_generator(nbits);
+		do p = getP(nbits);
 		while (!MillerRabin().isPrime(p));
 		// do q = bbs.generate_number();
-		do q = large_prime_generator(nbits);
+		do q = getQ(nbits);
 		while (!MillerRabin().isPrime(q));
 
 		mod = p * q;
@@ -53,6 +52,7 @@ RSA::~RSA() {
 }
 
 vector<ZZ> RSA::encrypt(const string text) {
+	cout << "Encrypting..." << endl;
 	vector<ZZ> out;
 	for (int i = 0; i < text.size(); i++) {
 		ZZ C, M;
