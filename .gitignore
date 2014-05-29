@@ -3,4 +3,5 @@ tests/msr
 tests/test
 temp
 MillerRabin
-files/
+files/decipher.txt
+files/cipher.txt
