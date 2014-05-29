@@ -4,8 +4,14 @@
 
 int main() {
 	long nbits = 500;
-	RSA r(nbits);
 	string plaintext = readText("plaintext.txt");
+
+	if (plaintext.empty()) {
+		cout << "File not found!" << endl;
+		return -1;
+	}
+
+	RSA r(nbits);
 	vector<ZZ> v = r.encrypt(plaintext);
 
 	for (int i = 0; i < v.size(); ++i) {
