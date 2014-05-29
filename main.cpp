@@ -19,11 +19,11 @@ int main() {
 	}
 
 	RSA receiver(nbits);
-	receiver = sender;
-	string decipher = receiver.decrypt(v);
+	string decipher = receiver.decrypt(cipher);
 	writeTextOnFile(decipher, "decipher.txt");
-
-	// sender.getAttributes();
+	cout << decipher << endl;
+	sender.getAttributes();
+	receiver.getAttributes();
 	
 	return 0;
 }
