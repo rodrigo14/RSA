@@ -29,3 +29,9 @@ void writeTextOnFile(ZZ &text, string file) {
 	ofstream fout(file.c_str(), ios::app);
 	fout << text << endl;
 }
+
+void clear_files() {
+	ofstream fout1("temp", ios::trunc);
+	ofstream fout3("files/cipher.txt", ios::trunc);
+	ofstream fout2("files/decipher.txt", ios::trunc);
+}

@@ -1,6 +1,7 @@
 #include <vector>
 #include "MillerRabin.cpp"
 #include "BlumBlumShub.cpp"
+#include "read.cpp"
 
 class RSA {
 private:
@@ -19,29 +20,14 @@ public:
 	void getAttributes();
 
 private:
+	void generate_keys(long nbits);
 	ZZ publickey_generator(const ZZ &phi);
 	ZZ privatekey_generator(const ZZ &e, const ZZ &phi);
 };
 
 RSA::RSA(long nbits) {
-	
-	BlumBlumShub bbs(nbits);
-	do {
-		// do p = bbs.generate_number();
-		do p = getP(nbits);
-		while (!MillerRabin().isPrime(p));
-		// do q = bbs.generate_number();
-		do q = getQ(nbits);
-		while (!MillerRabin().isPrime(q));
-
-		mod = p * q;
-		phi = (p-1) * (q-1);
-
-		publickey = publickey_generator(phi);
-	} while (mdc(phi, publickey) != 1);
-
-	this->privatekey = privatekey_generator(this->publickey, this->phi);
-	ofstream fout("temp", ios::trunc);
+	generate_keys(nbits);
+	clear_files();
 }
 
 RSA::~RSA() {
@@ -51,8 +37,9 @@ RSA::~RSA() {
 	phi.kill();
 }
 
+
+/* public */
 vector<ZZ> RSA::encrypt(const string text) {
-	cout << "Encrypting..." << endl;
 	vector<ZZ> out;
 	for (int i = 0; i < text.size(); i++) {
 		ZZ C, M;
@@ -65,7 +52,6 @@ vector<ZZ> RSA::encrypt(const string text) {
 }
 
 string RSA::decrypt(const vector<ZZ> v) {
-	cout << "Decrypting..." << endl;
 	string out;
 	for (int i = 0; i < v.size(); i++) {
 		ZZ C, M;
@@ -86,6 +72,25 @@ void RSA::getAttributes() {
 	cout << "publickey: " << this->publickey << endl << endl;
 	cout << "privatekey: " << this->privatekey << endl << endl;
 }
+
+
+/* private */
+void RSA::generate_keys(long nbits) {
+	do {
+		do p = large_prime_generator(nbits);
+		while (!MillerRabin().isPrime(p));
+		do q = large_prime_generator(nbits);
+		while (!MillerRabin().isPrime(q));
+
+		mod = p * q;
+		phi = (p-1) * (q-1);
+
+		publickey = publickey_generator(phi);
+	} while (mdc(phi, publickey) != 1);
+
+	privatekey = privatekey_generator(publickey, phi);
+}
+
 
 // return e = 65537
 ZZ RSA::publickey_generator(const ZZ &phi) {

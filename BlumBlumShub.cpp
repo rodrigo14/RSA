@@ -13,9 +13,9 @@ BlumBlumShub::BlumBlumShub(long nbits) {
 
 ZZ BlumBlumShub::generate_number() {
 	ZZ p, q;
-	do p = large_primes_generator(nbits)[0];
+	do p = large_prime_generator(nbits);
 	while (p % 4 != 3);
-	do q = large_primes_generator(nbits)[1];
+	do q = large_prime_generator(nbits);
 	while (p % 4 != 3);
 
 	ZZ n, s;

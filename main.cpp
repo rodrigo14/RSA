@@ -1,9 +1,8 @@
 #include <iostream>
 #include "RSA.cpp"
-#include "read.cpp"
 
 int main() {
-	long nbits = 500;
+	long nbits = 1024;
 	string plaintext = readText("plaintext.txt");
 
 	if (plaintext.empty()) {
@@ -11,19 +10,22 @@ int main() {
 		return -1;
 	}
 
-	RSA sender(nbits);
-	vector<ZZ> cipher = sender.encrypt(plaintext);
+	cout << "Generating keys..." << endl;
+	RSA r(nbits);
+	cout << "Encrypting..." << endl;
+	vector<ZZ> cipher = r.encrypt(plaintext);
 
 	for (int i = 0; i < cipher.size(); ++i) {
 		writeTextOnFile(cipher[i], "cipher.txt");
 	}
 
-	RSA receiver(nbits);
-	string decipher = receiver.decrypt(cipher);
+	cout << "Decrypting..." << endl;
+	string decipher = r.decrypt(cipher);
+
 	writeTextOnFile(decipher, "decipher.txt");
 	cout << decipher << endl;
-	sender.getAttributes();
-	receiver.getAttributes();
+
+	// r.getAttributes();
 	
 	return 0;
 }
