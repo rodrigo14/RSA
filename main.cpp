@@ -11,19 +11,19 @@ int main() {
 		return -1;
 	}
 
-	RSA emissor(nbits);
-	vector<ZZ> v = emissor.encrypt(plaintext);
+	RSA sender(nbits);
+	vector<ZZ> cipher = sender.encrypt(plaintext);
 
-	for (int i = 0; i < v.size(); ++i) {
-		writeTextOnFile(v[i], "cipher.txt");
+	for (int i = 0; i < cipher.size(); ++i) {
+		writeTextOnFile(cipher[i], "cipher.txt");
 	}
 
-	RSA receptor(nbits);
-	receptor = emissor;
-	string s = receptor.decrypt(v);
-	writeTextOnFile(s, "decipher.txt");
+	RSA receiver(nbits);
+	receiver = sender;
+	string decipher = receiver.decrypt(v);
+	writeTextOnFile(decipher, "decipher.txt");
 
-	// emissor.getAttributes();
+	// sender.getAttributes();
 	
 	return 0;
 }
