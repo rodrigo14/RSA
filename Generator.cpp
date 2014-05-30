@@ -1,18 +1,13 @@
 
 ZZ long_number_generator(long nbits) {
-	ZZ minimum, a, b;
-	a = 2;
-	b = 500;
-	minimum = Power(a, b);
 	ZZ random = RandomBits_ZZ(nbits);
-
 	return random;
 }
 
 ZZ large_prime_generator(long nbits) {
-	ZZ prime = RandomLen_ZZ(nbits);
+	ZZ prime = long_number_generator(nbits);
 	while (!MillerRabin().isPrime(prime)) {
-		prime = RandomLen_ZZ(nbits);
+		prime = long_number_generator(nbits);
 	}
 
 	return prime;

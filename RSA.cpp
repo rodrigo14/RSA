@@ -21,7 +21,7 @@ public:
 
 private:
 	void generate_keys(long nbits);
-	ZZ publickey_generator(const ZZ &phi);
+	ZZ publickey_generator();
 	ZZ privatekey_generator(const ZZ &e, const ZZ &phi);
 };
 
@@ -77,14 +77,14 @@ void RSA::getAttributes() {
 /* private */
 void RSA::generate_keys(long nbits) {
 	do {
-		do p = large_prime_generator(nbits);
+		do p = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(p));
-		do q = large_prime_generator(nbits);
+		do q = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(q));
 
 		mod = p * q;
 		phi = (p-1) * (q-1);
-		publickey = publickey_generator(phi);
+		publickey = publickey_generator();
 
 	} while (mdc(phi, publickey) != 1);
 
@@ -93,7 +93,7 @@ void RSA::generate_keys(long nbits) {
 
 
 // return e = 65537
-ZZ RSA::publickey_generator(const ZZ &phi) {
+ZZ RSA::publickey_generator() {
 	ZZ e, a, b;
 	a = 2;
 	b = 16;

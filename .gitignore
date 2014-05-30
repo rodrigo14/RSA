@@ -1,7 +1,7 @@
 prog
 tests/msr
 tests/test
-temp
+~temp
 MillerRabin
 files/decipher.txt
 files/cipher.txt

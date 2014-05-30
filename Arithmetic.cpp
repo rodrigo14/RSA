@@ -6,8 +6,8 @@ using namespace NTL;
 
 // return res = a^b mod(n)
 ZZ powerMod(const ZZ &a, const ZZ &b, const ZZ &n) {
-	ZZ A; A = a;
-	ZZ B; B = b;
+	ZZ A = a;
+	ZZ B = b;
 	ZZ res; res = 1;
 
 	while (B > 0) {
@@ -23,8 +23,8 @@ ZZ powerMod(const ZZ &a, const ZZ &b, const ZZ &n) {
 
 // return res = a^b
 ZZ Power(const ZZ &a, const ZZ &b) {
-	ZZ A; A = a;
-	ZZ B; B = b;
+	ZZ A = a;
+	ZZ B = b;
 	ZZ res; res = 1;
 
 	while (B > 0) {
@@ -41,7 +41,7 @@ ZZ Power(const ZZ &a, const ZZ &b) {
 // return res = a^b
 ZZ Power(const long a, const ZZ &b) {
 	ZZ A; A = a;
-	ZZ B; B = b;
+	ZZ B = b;
 	ZZ res; res = 1;
 
 	while (B > 0) {
@@ -101,10 +101,11 @@ ZZ inverseMod(const ZZ &number, const ZZ &modulo) {
 }
 
 long ZZtoi(const ZZ &z) {
-	ofstream fout("temp");
+	ofstream fout("~temp");
 	fout << z << endl;
-	ifstream fin("temp");
+	ifstream fin("~temp");
 	char buff[80];
 	fin.getline(buff, 80);
+	system("rm ~temp");
 	return atoi(buff);
 }

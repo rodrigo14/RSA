@@ -2,7 +2,7 @@
 #include "RSA.cpp"
 
 int main() {
-	long nbits = 4096;
+	long nbits = 500;
 	cout << "Number of bits: " << nbits << endl;
 
 	string plaintext = readText("plaintext.txt");
