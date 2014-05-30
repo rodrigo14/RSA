@@ -1,6 +1,4 @@
 prog
-tests/msr
-tests/test
 ~temp
 MillerRabin
 files/decipher.txt
