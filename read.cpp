@@ -1,7 +1,5 @@
 #include <fstream>
 
-using namespace std;
-
 const string directory_files = "files/";
 
 string readText(string file) {

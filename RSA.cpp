@@ -84,8 +84,8 @@ void RSA::generate_keys(long nbits) {
 
 		mod = p * q;
 		phi = (p-1) * (q-1);
-
 		publickey = publickey_generator(phi);
+
 	} while (mdc(phi, publickey) != 1);
 
 	privatekey = privatekey_generator(publickey, phi);
@@ -104,8 +104,6 @@ ZZ RSA::publickey_generator(const ZZ &phi) {
 
 // return d = e^{-1} mod(phi)
 ZZ RSA::privatekey_generator(const ZZ &e, const ZZ &phi) {
-	ZZ d;
-	InvModStatus(d, e, phi);
-	
+	ZZ d = inverseMod(e, phi);
 	return d;
 }

@@ -2,9 +2,10 @@
 #include "RSA.cpp"
 
 int main() {
-	long nbits = 1024;
-	string plaintext = readText("plaintext.txt");
+	long nbits = 4096;
+	cout << "Number of bits: " << nbits << endl;
 
+	string plaintext = readText("plaintext.txt");
 	if (plaintext.empty()) {
 		cout << "File not found!" << endl;
 		return -1;
@@ -12,6 +13,7 @@ int main() {
 
 	cout << "Generating keys..." << endl;
 	RSA r(nbits);
+
 	cout << "Encrypting..." << endl;
 	vector<ZZ> cipher = r.encrypt(plaintext);
 
