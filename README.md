@@ -12,7 +12,7 @@ $ make
 
 ### Executar programa ###
 ```
-./rsa
+$ ./rsa
 ```
 
 ### Funções presentes no programa ###
