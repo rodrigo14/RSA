@@ -74,7 +74,7 @@ ZZ mdc(const ZZ &A, const ZZ &B) {
 	return b;
 }
 
-// modulo*x + number*y = 1
+// y = b^{-1} mod(a)
 ZZ inverseMod(const ZZ &number, const ZZ &modulo) {
 	ZZ b = number;
 	ZZ a = modulo;
