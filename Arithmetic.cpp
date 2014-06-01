@@ -101,11 +101,11 @@ ZZ inverseMod(const ZZ &number, const ZZ &modulo) {
 }
 
 long ZZtoi(const ZZ &z) {
-	ofstream fout("~temp");
+	ofstream fout(".temp");
 	fout << z << endl;
-	ifstream fin("~temp");
+	ifstream fin(".temp");
 	char buff[80];
 	fin.getline(buff, 80);
-	system("rm ~temp");
+	system("rm .temp");
 	return atoi(buff);
 }
