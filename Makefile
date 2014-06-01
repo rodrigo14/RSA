@@ -1,2 +1,2 @@
 all:
-	g++ -o prog main.cpp -lntl -g -pedantic -lm
+	g++ -o rsa main.cpp -lntl -g -pedantic -lm
