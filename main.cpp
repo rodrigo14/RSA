@@ -2,8 +2,9 @@
 #include "RSA.cpp"
 
 int main() {
-	long nbits = 500;
-	cout << "Number of bits: " << nbits << endl;
+	long nbits;
+	cout << "Number of bits: ";
+	cin >> nbits;
 
 	string plaintext = readText("plaintext.txt");
 	if (plaintext.empty()) {
