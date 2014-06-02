@@ -3,5 +3,7 @@ rsa
 MillerRabin
 files/decipher.txt
 files/cipher.txt
+files/publickey.txt
+files/privatekey.txt
 main
 compile

@@ -16,16 +16,27 @@ string readText(string file) {
     return text;
 }
 
-void writeTextOnFile(string text, string file) {
+void writeTextOnFile(string text, string file, bool append=1) {
 	file = directory_files + file;
-	ofstream fout(file.c_str(), ios::app);
-	fout << text << endl;
+	if (append) {
+		ofstream fout(file.c_str(), ios::app);
+		fout << text << endl;
+	} else {
+		ofstream fout(file.c_str());
+		fout << text << endl;
+	}
 }
 
-void writeTextOnFile(ZZ &text, string file) {
+void writeTextOnFile(ZZ &text, string file, bool append=1) {
 	file = directory_files + file;
-	ofstream fout(file.c_str(), ios::app);
-	fout << text << endl;
+	if (append) {
+		ofstream fout(file.c_str(), ios::app);
+		fout << text << endl;
+	} else {
+		ofstream fout(file.c_str());
+		fout << text << endl;
+	}
+
 }
 
 void clear_files() {

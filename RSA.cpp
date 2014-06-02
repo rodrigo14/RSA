@@ -79,6 +79,7 @@ void RSA::generate_keys(long nbits) {
 	do {
 		do p = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(p));
+
 		do q = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(q));
 
@@ -89,6 +90,9 @@ void RSA::generate_keys(long nbits) {
 	} while (mdc(phi, publickey) != 1);
 
 	privatekey = privatekey_generator(publickey, phi);
+	
+	writeTextOnFile(publickey, "publickey.txt", 0);
+	writeTextOnFile(privatekey, "privatekey.txt", 0);
 }
 
 
