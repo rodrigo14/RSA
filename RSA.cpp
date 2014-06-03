@@ -6,13 +6,12 @@
 class RSA {
 private:
 	ZZ p, q;
+	ZZ publickey;
 	ZZ privatekey;
+	ZZ mod;
 	ZZ phi;
 
 public:
-	ZZ publickey;
-	ZZ mod;
-
 	RSA(long nbits);
 	~RSA();
 	vector<ZZ> encrypt(const string text);
@@ -60,7 +59,6 @@ string RSA::decrypt(const vector<ZZ> v) {
 		out += ZZtoi(M);
 	}
 
-	cout << "Done!" << endl;
 	return out;
 }
 

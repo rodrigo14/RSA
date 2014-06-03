@@ -3,17 +3,17 @@
 class MillerRabin {
 public:
 	MillerRabin();
-	bool isPrime(ZZ n);
+	bool isPrime(ZZ &n);
 
 private:
 	void factoring_number(ZZ &k, ZZ &q, const ZZ &n);
-	ZZ witness(const ZZ n);
+	ZZ witness(const ZZ &n);
 };
 
 
 MillerRabin::MillerRabin() {}
 
-bool MillerRabin::isPrime(ZZ n) {
+bool MillerRabin::isPrime(ZZ &n) {
 	ZZ k, q, a;
 
 	factoring_number(k, q, n);
@@ -25,7 +25,7 @@ bool MillerRabin::isPrime(ZZ n) {
 
 	ZZ j;
 	for (j = 0; j < k; j++) {
-		ZZ t; t = Power(2, j)*q;
+		ZZ t = Power(2, j) * q;
 		if (powerMod(a, t, n) == n-1)
 			return 1;
 	}
@@ -39,11 +39,11 @@ void MillerRabin::factoring_number(ZZ &k, ZZ &q, const ZZ &n) {
 	q = (n-1)/Power(2, --k);
 }
 
-// return a, 1 < a < (n-1)
-ZZ MillerRabin::witness(const ZZ n) {
+// return {a, 1 < a < (n-1)}
+ZZ MillerRabin::witness(const ZZ &n) {
 	srand(time(NULL));
 	long t = rand();
 	ZZ random; random = t;
-	ZZ a; a = random%(n-1) + 1;
+	ZZ a = random % (n-1) + 1;
 	return a;
 }

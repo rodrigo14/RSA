@@ -26,6 +26,7 @@ int main() {
 	string decipher = r.decrypt(cipher);
 
 	writeTextOnFile(decipher, "decipher.txt");
+	cout << "Done!" << endl;
 	cout << decipher << endl;
 
 	// r.getAttributes();
