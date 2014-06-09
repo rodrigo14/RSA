@@ -1,6 +1,6 @@
 #include <fstream>
 
-const string directory_files = "files/";
+const string directory_files = "../files/";
 
 string readText(string file) {
 	file = directory_files + file;
