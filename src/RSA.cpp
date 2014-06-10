@@ -8,7 +8,7 @@ RSA::RSA(long nbits) {
 RSA::~RSA() {
 	publickey.kill();
 	privatekey.kill();
-	mod.kill();
+	n.kill();
 	phi.kill();
 }
 
@@ -19,7 +19,7 @@ vector<ZZ> RSA::encrypt(const string text) {
 	for (int i = 0; i < text.size(); i++) {
 		ZZ C, M;
 		M = text[i];
-		C = powerMod(M, this->publickey, this->mod);
+		C = powerMod(M, this->publickey, this->n);
 		out.push_back(C);
 	}
 
@@ -31,7 +31,7 @@ string RSA::decrypt(const vector<ZZ> v) {
 	for (int i = 0; i < v.size(); i++) {
 		ZZ C, M;
 		C = v[i];
-		M = powerMod(C, this->privatekey, this->mod);
+		M = powerMod(C, this->privatekey, this->n);
 		out += ZZtoi(M);
 	}
 
@@ -41,7 +41,7 @@ string RSA::decrypt(const vector<ZZ> v) {
 void RSA::getAttributes() {
 	cout << "p: " << this->p << endl << endl;
 	cout << "q: " << this->q << endl << endl;
-	cout << "mod: " << this->mod << endl << endl;
+	cout << "n: " << this->n << endl << endl;
 	cout << "phi: " << this->phi << endl << endl;
 	cout << "publickey: " << this->publickey << endl << endl;
 	cout << "privatekey: " << this->privatekey << endl << endl;
@@ -57,7 +57,7 @@ void RSA::generate_keys(long nbits) {
 		do q = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(q));
 
-		mod = p * q;
+		n = p * q;
 		phi = (p-1) * (q-1);
 		publickey = publickey_generator();
 

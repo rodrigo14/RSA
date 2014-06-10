@@ -8,7 +8,7 @@ private:
 	ZZ p, q;
 	ZZ publickey;
 	ZZ privatekey;
-	ZZ mod;
+	ZZ n;
 	ZZ phi;
 
 public:

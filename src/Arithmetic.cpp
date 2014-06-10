@@ -5,17 +5,17 @@ using namespace std;
 using namespace NTL;
 
 // return res = a^b mod(n)
-ZZ powerMod(const ZZ &a, const ZZ &b, const ZZ &n) {
-	ZZ A = a;
-	ZZ B = b;
+ZZ powerMod(const ZZ &A, const ZZ &B, const ZZ &n) {
+	ZZ a = A;
+	ZZ b = B;
 	ZZ res; res = 1;
 
-	while (B > 0) {
-		if (IsOne(B&1)) {
-			res = (res*A)%n;
+	while (b > 0) {
+		if (IsOne(b&1)) {
+			res = (res*a)%n;
 		}
-		B >>= 1;
-		A = (A*A)%n;
+		b >>= 1;
+		a = (a*a)%n;
 	}
 
 	return res;
