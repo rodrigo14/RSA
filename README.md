@@ -28,8 +28,8 @@ $ ./rsa
 
 ### Observações ###
 * Para o programa funcionar deve-se ter instalado na máquina a biblioteca de teoria dos números, existente em C++, chamada NTL (Number Theory Library)
-* Para instalar esta biblioteca no Ubuntu:
+* Para instalar esta biblioteca no Linux, basta digitar o comando:
 ```
-$ sudo apt-get install libntl-dev
+# apt-get install libntl-dev
 ```
 
