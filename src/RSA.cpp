@@ -51,11 +51,10 @@ void RSA::getAttributes() {
 /* private */
 void RSA::generate_keys(long nbits) {
 	do {
-		//do p = long_number_generator(nbits);
-		do p = BlumBlumShub(nbits).generate_number();
+		do p = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(p));
 
-		do q = BlumBlumShub(nbits).generate_number();
+		do q = long_number_generator(nbits);
 		while (!MillerRabin().isPrime(q));
 
 		n = p * q;
