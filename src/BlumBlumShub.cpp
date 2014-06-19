@@ -16,7 +16,7 @@ ZZ BlumBlumShub::generate_number() {
 	do p = large_prime_generator(nbits);
 	while (p % 4 != 3);
 	do q = large_prime_generator(nbits);
-	while (p % 4 != 3);
+	while (q % 4 != 3);
 
 	ZZ n, s;
 	n = p*q;

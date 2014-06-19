@@ -40,7 +40,6 @@ void writeTextOnFile(ZZ &text, string file, bool append=1) {
 }
 
 void clear_files() {
-	ofstream fout1(".temp", ios::trunc);
-	ofstream fout3("files/cipher.txt", ios::trunc);
-	ofstream fout2("files/decipher.txt", ios::trunc);
+	system("rm ../files/cipher.txt");
+	system("rm ../files/decipher.txt");
 }
