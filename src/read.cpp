@@ -1,6 +1,6 @@
 #include <fstream>
 
-const string directory_files = "../files/";
+const string directory_files = "files/";
 
 string readText(string file) {
 	file = directory_files + file;
@@ -40,6 +40,6 @@ void writeTextOnFile(ZZ &text, string file, bool append=1) {
 }
 
 void clear_files() {
-	system("rm ../files/cipher.txt");
-	system("rm ../files/decipher.txt");
+	system("rm files/cipher.txt");
+	system("rm files/decipher.txt");
 }
