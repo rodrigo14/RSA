@@ -12,7 +12,7 @@ $ make
 
 ### Executar programa ###
 ```
-$ ./rsa
+$ ./rsa <arquivo> <bits>
 ```
 
 ### Funções presentes no programa ###
@@ -22,12 +22,13 @@ $ ./rsa
 * Função para cifração e decifração de uma mensagem
 
 ### Como usar o programa ###
-* Para cifrar uma mensagem, deve-se editar o arquivo encontrado em `files/plaintext.txt`
-* As mensagens cifradas e decifradas se encontram em `files/`
+* Ao executar o programa deve-se passar como parâmetros o nome do arquivo que contém a mensagem a ser cifrada e o número de bits desejado
+* Coloque suas mensagens de entrada em `files/`
+* As saídas geradas encontram-se em `files/`
 
 
 ### Observações ###
-* Para o programa funcionar deve-se ter instalado na máquina a biblioteca de teoria dos números, existente em C++, chamada NTL (Number Theory Library)
+* Para compilação é necessário ter instalado na máquina a biblioteca de teoria dos números, existente em C++, chamada NTL (Number Theory Library)
 * Para instalar esta biblioteca no Linux, basta digitar o comando:
 ```
 # apt-get install libntl-dev

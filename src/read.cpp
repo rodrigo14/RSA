@@ -5,7 +5,7 @@ const string directory_files = "files/";
 string readText(string file) {
 	file = directory_files + file;
 	ifstream fin(file.c_str());
-	if (!fin.is_open()) {
+	if (not fin.is_open()) {
 		return "";
 	}
 
@@ -40,6 +40,6 @@ void writeTextOnFile(ZZ &text, string file, bool append=1) {
 }
 
 void clear_files() {
-	system("rm files/cipher.txt");
-	system("rm files/decipher.txt");
+	system("rm -f cipher.txt");
+	system("rm -f decipher.txt");
 }
