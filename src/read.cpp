@@ -1,4 +1,6 @@
-#include <fstream>
+#include "read.h"
+
+using namespace std;
 
 const string directory_files = "files/";
 
@@ -16,7 +18,7 @@ string readText(string file) {
     return text;
 }
 
-void writeTextOnFile(string text, string file, bool append=1) {
+void writeTextOnFile(string text, string file, bool append) {
 	file = directory_files + file;
 	if (append) {
 		ofstream fout(file.c_str(), ios::app);
@@ -27,7 +29,7 @@ void writeTextOnFile(string text, string file, bool append=1) {
 	}
 }
 
-void writeTextOnFile(ZZ &text, string file, bool append=1) {
+void writeTextOnFile(ZZ &text, string file, bool append) {
 	file = directory_files + file;
 	if (append) {
 		ofstream fout(file.c_str(), ios::app);

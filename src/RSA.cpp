@@ -1,3 +1,5 @@
+#include "Arithmetic.h"
+#include "read.h"
 #include "RSA.h"
 
 RSA::RSA(long nbits) {
@@ -12,33 +14,35 @@ RSA::~RSA() {
 	phi.kill();
 }
 
-
 /* public */
-vector<ZZ> RSA::encrypt(const string text) {
+vector<ZZ>
+RSA::encrypt(const string text) {
 	vector<ZZ> out;
-	for (int i = 0; i < text.size(); i++) {
+	for (unsigned int i = 0; i < text.size(); i++) {
 		ZZ C, M;
 		M = text[i];
-		C = powerMod(M, this->publickey, this->n);
+		C = PowerMod(M, this->publickey, this->n);
 		out.push_back(C);
 	}
 
 	return out;
 }
 
-string RSA::decrypt(const vector<ZZ> v) {
+string
+RSA::decrypt(const vector<ZZ> v) {
 	string out;
-	for (int i = 0; i < v.size(); i++) {
+	for (unsigned int i = 0; i < v.size(); i++) {
 		ZZ C, M;
 		C = v[i];
-		M = powerMod(C, this->privatekey, this->n);
+		M = PowerMod(C, this->privatekey, this->n);
 		out += ZZtoi(M);
 	}
 
 	return out;
 }
 
-void RSA::getAttributes() {
+void
+RSA::getAttributes() {
 	cout << "p: " << this->p << endl << endl;
 	cout << "q: " << this->q << endl << endl;
 	cout << "n: " << this->n << endl << endl;
@@ -49,19 +53,16 @@ void RSA::getAttributes() {
 
 
 /* private */
-void RSA::generate_keys(long nbits) {
+void
+RSA::generate_keys(long nbits) {
 	do {
-		do p = long_number_generator(nbits);
-		while (!MillerRabin().isPrime(p));
-
-		do q = long_number_generator(nbits);
-		while (!MillerRabin().isPrime(q));
-
+		p = GenGermainPrime_ZZ(nbits);
+		q = GenGermainPrime_ZZ(nbits);
 		n = p * q;
 		phi = (p-1) * (q-1);
 		publickey = publickey_generator();
 
-	} while (mdc(phi, publickey) != 1);
+	} while (GCD(phi, publickey) != 1);
 
 	privatekey = privatekey_generator(publickey, phi);
 	
@@ -71,7 +72,8 @@ void RSA::generate_keys(long nbits) {
 
 
 // return e = 65537
-ZZ RSA::publickey_generator() {
+ZZ
+RSA::publickey_generator() {
 	ZZ e, a, b;
 	a = 2;
 	b = 16;
@@ -81,7 +83,8 @@ ZZ RSA::publickey_generator() {
 }
 
 // return d = e^{-1} mod(phi)
-ZZ RSA::privatekey_generator(const ZZ &e, const ZZ &phi) {
-	ZZ d = inverseMod(e, phi);
+ZZ
+RSA::privatekey_generator(const ZZ &e, const ZZ &phi) {
+	ZZ d = InvMod(e, phi);
 	return d;
 }

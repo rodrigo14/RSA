@@ -1,5 +1,6 @@
 #include <iostream>
-#include "RSA.cpp"
+#include "read.h"
+#include "RSA.h"
 
 int main(int argc, char const *argv[]) {
 	if (argc != 3) {
@@ -26,7 +27,7 @@ int main(int argc, char const *argv[]) {
 	cout << "Encrypting" << endl;
 	vector<ZZ> cipher = r.encrypt(plaintext);
 
-	for (int i = 0; i < cipher.size(); ++i) {
+	for (unsigned int i = 0; i < cipher.size(); ++i) {
 		writeTextOnFile(cipher[i], "cipher.txt");
 	}
 

@@ -1,16 +1,10 @@
+#include <NTL/ZZ.h>
 #include <vector>
-#include "MillerRabin.cpp"
-#include "BlumBlumShub.cpp"
-#include "read.cpp"
+
+using namespace NTL;
+using namespace std;
 
 class RSA {
-private:
-	ZZ p, q;
-	ZZ publickey;
-	ZZ privatekey;
-	ZZ n;
-	ZZ phi;
-
 public:
 	RSA(long nbits);
 	~RSA();
@@ -19,6 +13,12 @@ public:
 	void getAttributes();
 
 private:
+	ZZ p, q;
+	ZZ publickey;
+	ZZ privatekey;
+	ZZ n;
+	ZZ phi;
+
 	void generate_keys(long nbits);
 	ZZ publickey_generator();
 	ZZ privatekey_generator(const ZZ &e, const ZZ &phi);
