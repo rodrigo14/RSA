@@ -51,11 +51,14 @@ void RSA::getAttributes() {
 /* private */
 void RSA::generate_keys(long nbits) {
 	do {
-		do p = long_number_generator(nbits);
-		while (!MillerRabin().isPrime(p));
+		// do p = long_number_generator(nbits);
+		// while (!MillerRabin().isPrime(p));
 
-		do q = long_number_generator(nbits);
-		while (!MillerRabin().isPrime(q));
+		// do q = long_number_generator(nbits);
+		// while (!MillerRabin().isPrime(q));
+
+		p = GenGermainPrime_ZZ(nbits);
+		q = GenGermainPrime_ZZ(nbits);
 
 		n = p * q;
 		phi = (p-1) * (q-1);
